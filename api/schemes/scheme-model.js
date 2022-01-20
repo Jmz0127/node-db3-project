@@ -17,7 +17,11 @@ function find() {
     2A- When you have a grasp on the query go ahead and build it in Knex.
     Return from this function the resulting dataset.
   */
-	return db('schemes as sc').leftJoin('steps as st', 'sc.scheme_id', 'st.scheme_id').select('sc.*').count('st.step_id as number_of_steps').groupBy('sc.scheme_id').orderBy('sc.scheme_id');
+	return db('schemes as sc')
+  .leftJoin('steps as st', 'sc.scheme_id', 'st.scheme_id')
+  .select('sc.*')
+  .count('st.step_id as number_of_steps')
+  .groupBy('sc.scheme_id')
 }
 
 async function findById(scheme_id) {
@@ -87,7 +91,7 @@ async function findById(scheme_id) {
         "steps": []
       }
   */
-	const rows = await db('schemes as sc').leftJoin('steps as st', 'sc.scheme_id', 'st.scheme_id').where('sc.scheme_id', scheme_id).select('st.*', 'sc.scheme_name').orderBy('st.step_number');
+	const rows = await db('schemes as sc').leftJoin('steps as st', 'sc.scheme_id', 'st.scheme_id').where('sc.scheme_id', scheme_id).select('st.*', 'sc.scheme_name').orderBy('st.step_number')
 
 	const result = {
 		scheme_id: rows[0].scheme_id,
